@@ -1,0 +1,15 @@
+{
+    "name": "andy/library-cms",
+    "description": "Basic CMS for running a CRUD library for books, movies, and maybe more?",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andy Ball",
+            "email": "andybaaall@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^3.6"
+    }
+}

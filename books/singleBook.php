@@ -14,7 +14,7 @@
 
         <div class="row mb-2">
             <div class="col">
-                <a target="_self" class="btn btn-outline-primary" href="">Edit</a>
+                <a class="btn btn-outline-primary" href="">Edit</a>
                 <button class="btn btn-outline-danger" type="button" name="button" data-toggle="modal" data-target="#confirmModal">Delete</button>
             </div>
         </div>

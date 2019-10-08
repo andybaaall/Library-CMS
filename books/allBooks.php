@@ -17,7 +17,7 @@
         </div>
         <div class="row mb-2">
             <div class="col">
-                <a target="_self" class="btn btn-outline-primary" href="books/addBook.php">Add new Book</a>
+                <a class="btn btn-outline-primary" href="books/addBook.php">Add new Book</a>
             </div>
         </div>
 
@@ -29,8 +29,8 @@
                          <p class="card-text">Harry Potter and the Philosopher's Stone</p>
                          <div class="d-flex justify-content-between align-items-center">
                              <div class="btn-group">
-                                 <a target="_self" href="books/singleBook.php" class="btn btn-sm btn-outline-info">View</a>
-                                 <a target="_self" href="" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                 <a href="books/singleBook.php" class="btn btn-sm btn-outline-info">View</a>
+                                 <a href="" class="btn btn-sm btn-outline-secondary">Edit</a>
                              </div>
                          </div>
                      </div>
