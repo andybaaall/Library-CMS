@@ -1,4 +1,5 @@
 <?php
+    // we'll need autoload on pretty much every page
     if (is_dir('vendor')) { // if the directory at the same level, do some stuff:
         // this will only be true on the index page - index.php and vendor/ are at the same level
         require('vendor/autoload.php');
@@ -6,8 +7,17 @@
         require('../vendor/autoload.php');
     }
 
+    // echo __DIR__ . '/..';
+    // __DIR__ is php for 'current directory'
 
- ?>
+    // autoloader's job is to find functions that aren't defined in vanilla php
+    // like $dotenv's functions!
+    $dotenv = Dotenv\Dotenv::create(__DIR__ . '/..');   // we need to add '/.. to go up a level from DIR'
+    $dotenv->load();
+    // echo getenv('PROJECT_URL'); // omgosh it works!
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -18,7 +28,7 @@
     <!-- links and anchors are often going to route to the wrong place! here's a fix: -->
     <!-- the base tag sets the 'base' from which navigation happens -->
     <!-- so any time we request a file, it's going to prepend the base to the filepath -->
-    <base href="http://192.168.33.10/Library-CMS/">
+    <base href="<?php getenv('PROJECT_URL'); ?>">
 
     <title>Yoobee School of Design Library</title>
 
