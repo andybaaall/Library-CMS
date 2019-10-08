@@ -1,10 +1,10 @@
-<?php require('templates/head.php') ?>
+<?php require('../templates/head.php'); ?>
 
 <body>
-    <?php require('templates/header.php') ?>
+    <?php require('../templates/header.php'); ?>
 
     <div class="container">
-        <?php require('templates/navbar.php') ?>
+        <?php require('../templates/navbar.php'); ?>
 
         <div class="row mb-2">
             <div class="col">
@@ -14,7 +14,7 @@
 
         <div class="row mb-2">
             <div class="col">
-                <a class="btn btn-outline-primary" href="">Edit</a>
+                <a target="_self" class="btn btn-outline-primary" href="">Edit</a>
                 <button class="btn btn-outline-danger" type="button" name="button" data-toggle="modal" data-target="#confirmModal">Delete</button>
             </div>
         </div>
@@ -54,4 +54,4 @@
         </div>
     </div>
 
-<?php require('templates/foot.php') ?>
+<?php require('../templates/foot.php'); ?>

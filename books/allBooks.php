@@ -1,10 +1,13 @@
-<?php require('templates/head.php') ?>
+<?php require('../templates/head.php'); ?>
 
 <body>
-    <?php require('templates/header.php') ?>
+    <?php require('../templates/header.php');
+ ?>
 
     <div class="container">
-        <?php require('templates/navbar.php') ?>
+        <?php require('../templates/navbar.php');
+
+ ?>
 
 
         <div class="row mb-2">
@@ -14,7 +17,7 @@
         </div>
         <div class="row mb-2">
             <div class="col">
-                <a class="btn btn-outline-primary" href="addBook.html">Add new Book</a>
+                <a target="_self" class="btn btn-outline-primary" href="books/addBook.php">Add new Book</a>
             </div>
         </div>
 
@@ -26,8 +29,8 @@
                          <p class="card-text">Harry Potter and the Philosopher's Stone</p>
                          <div class="d-flex justify-content-between align-items-center">
                              <div class="btn-group">
-                                 <a href="singleBook.html" class="btn btn-sm btn-outline-info">View</a>
-                                 <a href="" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                 <a target="_self" href="books/singleBook.php" class="btn btn-sm btn-outline-info">View</a>
+                                 <a target="_self" href="" class="btn btn-sm btn-outline-secondary">Edit</a>
                              </div>
                          </div>
                      </div>
@@ -36,4 +39,4 @@
         </div>
     </div>
 
-<?php require('templates/foot.php') ?>
+<?php require('../templates/foot.php'); ?>
