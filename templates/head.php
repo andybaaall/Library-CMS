@@ -16,6 +16,9 @@
     $dotenv->load();
     // echo getenv('PROJECT_URL'); // omgosh it works!
 
+    // connecting to the SQL database
+    require('connection.php');
+
 
 ?>
 
@@ -28,7 +31,7 @@
     <!-- links and anchors are often going to route to the wrong place! here's a fix: -->
     <!-- the base tag sets the 'base' from which navigation happens -->
     <!-- so any time we request a file, it's going to prepend the base to the filepath -->
-    <base href="<?php getenv('PROJECT_URL'); ?>">
+    <base href="<?php echo getenv('PROJECT_URL'); ?>">
 
     <title>Yoobee School of Design Library</title>
 
