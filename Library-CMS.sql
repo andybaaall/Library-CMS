@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 08, 2019 at 10:46 PM
+-- Generation Time: Oct 09, 2019 at 03:21 AM
 -- Server version: 5.7.27-0ubuntu0.16.04.1
 -- PHP Version: 7.0.33-8+ubuntu16.04.1+deb.sury.org+1
 
@@ -27,9 +27,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `Authors` (
-  `_id` tinyint(6) UNSIGNED NOT NULL,
-  `name` varchar(100) CHARACTER SET utf8mb4 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `_id` int(6) UNSIGNED NOT NULL,
+  `name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -39,11 +39,37 @@ CREATE TABLE `Authors` (
 
 CREATE TABLE `Books` (
   `_id` int(6) UNSIGNED NOT NULL,
-  `title` int(100) NOT NULL,
+  `title` varchar(100) NOT NULL,
   `year` year(4) NOT NULL,
-  `description` text CHARACTER SET utf8mb4 NOT NULL,
-  `author` tinyint(6) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `description` text NOT NULL,
+  `author_id` int(6) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Directors`
+--
+
+CREATE TABLE `Directors` (
+  `_id` int(6) UNSIGNED NOT NULL,
+  `name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Movies`
+--
+
+CREATE TABLE `Movies` (
+  `_id` int(6) UNSIGNED NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `year` year(4) NOT NULL,
+  `runtime` int(3) UNSIGNED NOT NULL,
+  `genre` varchar(100) NOT NULL,
+  `director_id` int(6) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -61,17 +87,46 @@ ALTER TABLE `Authors`
 --
 ALTER TABLE `Books`
   ADD PRIMARY KEY (`_id`),
-  ADD KEY `author` (`author`),
-  ADD KEY `author_2` (`author`);
+  ADD KEY `author_id` (`author_id`);
+
+--
+-- Indexes for table `Directors`
+--
+ALTER TABLE `Directors`
+  ADD PRIMARY KEY (`_id`),
+  ADD KEY `_id` (`_id`);
+
+--
+-- Indexes for table `Movies`
+--
+ALTER TABLE `Movies`
+  ADD PRIMARY KEY (`_id`),
+  ADD KEY `director_id` (`director_id`),
+  ADD KEY `_id` (`_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
+-- AUTO_INCREMENT for table `Authors`
+--
+ALTER TABLE `Authors`
+  MODIFY `_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `Books`
 --
 ALTER TABLE `Books`
+  MODIFY `_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `Directors`
+--
+ALTER TABLE `Directors`
+  MODIFY `_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `Movies`
+--
+ALTER TABLE `Movies`
   MODIFY `_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- Constraints for dumped tables
@@ -81,7 +136,13 @@ ALTER TABLE `Books`
 -- Constraints for table `Books`
 --
 ALTER TABLE `Books`
-  ADD CONSTRAINT `Books_ibfk_1` FOREIGN KEY (`author`) REFERENCES `Authors` (`_id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `Books_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `Authors` (`_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `Movies`
+--
+ALTER TABLE `Movies`
+  ADD CONSTRAINT `Movies_ibfk_1` FOREIGN KEY (`director_id`) REFERENCES `Directors` (`_id`) ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
