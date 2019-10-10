@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 10, 2019 at 01:51 AM
+-- Generation Time: Oct 10, 2019 at 10:33 PM
 -- Server version: 5.7.27-0ubuntu0.16.04.1
 -- PHP Version: 7.0.33-8+ubuntu16.04.1+deb.sury.org+1
 
@@ -37,7 +37,9 @@ CREATE TABLE `Authors` (
 
 INSERT INTO `Authors` (`_id`, `name`) VALUES
 (1, 'test author'),
-(2, 'Tenessee Williams');
+(2, 'Tenessee Williams'),
+(16, 'vincent adultman'),
+(17, 'vincent adultman');
 
 -- --------------------------------------------------------
 
@@ -53,31 +55,14 @@ CREATE TABLE `Books` (
   `author_id` int(6) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `Directors`
+-- Dumping data for table `Books`
 --
 
-CREATE TABLE `Directors` (
-  `_id` int(6) NOT NULL,
-  `name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `Movies`
---
-
-CREATE TABLE `Movies` (
-  `_id` int(6) NOT NULL,
-  `title` varchar(100) NOT NULL,
-  `year` year(4) NOT NULL,
-  `runtime` int(3) NOT NULL,
-  `genre` varchar(100) NOT NULL,
-  `director_id` int(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `Books` (`_id`, `title`, `year`, `description`, `author_id`) VALUES
+(5, 'test title', 1999, 'test description for a test book', 1),
+(6, 'The Wind in the Willows', 1902, 'With the arrival of spring yadda yadda, they go on a picnic.', 1),
+(7, 'The Castle', 1930, '1930something, I guess. There\'s no castle. ', 1);
 
 --
 -- Indexes for dumped tables
@@ -98,20 +83,6 @@ ALTER TABLE `Books`
   ADD KEY `author_id` (`author_id`);
 
 --
--- Indexes for table `Directors`
---
-ALTER TABLE `Directors`
-  ADD PRIMARY KEY (`_id`),
-  ADD KEY `_id` (`_id`);
-
---
--- Indexes for table `Movies`
---
-ALTER TABLE `Movies`
-  ADD PRIMARY KEY (`_id`),
-  ADD KEY `director_id` (`director_id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -119,22 +90,12 @@ ALTER TABLE `Movies`
 -- AUTO_INCREMENT for table `Authors`
 --
 ALTER TABLE `Authors`
-  MODIFY `_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `Books`
 --
 ALTER TABLE `Books`
-  MODIFY `_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Directors`
---
-ALTER TABLE `Directors`
-  MODIFY `_id` int(6) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Movies`
---
-ALTER TABLE `Movies`
-  MODIFY `_id` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- Constraints for dumped tables
 --
@@ -144,12 +105,6 @@ ALTER TABLE `Movies`
 --
 ALTER TABLE `Books`
   ADD CONSTRAINT `Books_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `Authors` (`_id`) ON UPDATE CASCADE;
-
---
--- Constraints for table `Movies`
---
-ALTER TABLE `Movies`
-  ADD CONSTRAINT `Movies_ibfk_1` FOREIGN KEY (`director_id`) REFERENCES `Directors` (`_id`) ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

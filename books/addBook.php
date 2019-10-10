@@ -64,27 +64,46 @@
                 // var_dump('strlen is more than the maximum possible');
                 array_push($errors, 'Please do not write the whole book in the description field.');
             }
-        }   // if($_POST)
 
-        if (empty($errors)) {
-            // here, we need to 'escape the string'. We want to make sure that whatever's entered is converted to a string.
-            // because we definitely don't want people injecting malicious code into our database!
 
-            $safeTitle = mysqli_real_escape_string($dbc, $title);   // this takes two values - a DB connection, and the data to be converted
-            // we'll often see redeclaration: $title = mysqli_real_escape_string($dbc, $title);
-            $safeAuthor = mysqli_real_escape_string($dbc, $author);
-            $safeDescription = mysqli_real_escape_string($dbc, $description);
+            if (empty($errors)) {
+                // here, we need to 'escape the string'. We want to make sure that whatever's entered is converted to a string.
+                // because we definitely don't want people injecting malicious code into our database!
 
-            $sql = "INSERT INTO `Authors`(`name`) VALUES ('$safeAuthor')";
-            // double-quotes here, because we're going to be pasting a string in (from when we were testing the query in phpMyAdmin's SQL env)
-            $result = mysqli_query($dbc, $sql);    // mysqli_query needs two values - a database connection, and a query string
+                $safeTitle = mysqli_real_escape_string($dbc, $title);   // this takes two values - a DB connection, and the data to be converted
+                // we'll often see redeclaration: $title = mysqli_real_escape_string($dbc, $title);
+                $safeAuthor = mysqli_real_escape_string($dbc, $author);
+                $safeYear = mysqli_real_escape_string($dbc, $year);
+                $safeDescription = mysqli_real_escape_string($dbc, $description);
 
-            if($result && mysqli_affected_rows($dbc) > 0){
-                // if there's a result AND it's effected a row - think of this as shorthand for success() in AJAX
-                var_dump('Added an author.')
-            } else {
-                die('Something went wrong adding the author.')
-            }
+                // $sql = "INSERT INTO `Authors`(`name`) VALUES ('$safeAuthor')";
+                // // double-quotes here, because we're going to be pasting a string in (from when we were testing the query in phpMyAdmin's SQL env)
+                // $result = mysqli_query($dbc, $sql);    // mysqli_query needs two values - a database connection, and a query string
+                //
+                // if($result && mysqli_affected_rows($dbc) > 0){
+                //     // if there's a result AND it's effected a row - think of this as shorthand for success() in AJAX
+                //     // var_dump('Added an author.')
+                //     $authorID = $dbc->insert_id;    // this gets us the ID attached to the most recent DB connection
+                //                                     // which we need for our Books table, so we have an $authorID
+                //
+                // } else {
+                //     die('Something went wrong adding the author.');
+                // }
+
+                $authorID = 1;       // here's a (valid, as in already in the DB) value for $authorID
+                $bookSql = "INSERT INTO `Books`(`title`, `year`, `description`, `author_id`) VALUES ('$safeTitle',$safeYear,'$safeDescription','$authorID')";
+                // die($bookSql);
+                $booksResult = mysqli_query($dbc, $bookSql);
+                if($booksResult && mysqli_affected_rows($dbc) > 0){
+                    var_dump('successfully added the book');
+                    // redirect to a page
+                    header('Location:singleBook.php');  // doesn't use the base (is that a scope thing?)
+                } else {
+                    die('something went wrong adding the book');
+                }
+
+            }   // if($_POST)
+
 
         }
 ?>
