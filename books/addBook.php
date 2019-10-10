@@ -117,22 +117,22 @@
                 <form action="./books/addBook.php" method="post" enctype="multipart/form-data" autocomplete="off">
                     <div class="form-group">
                       <label for="title">Book Title</label>
-                      <input type="text" class="form-control" name="title"  placeholder="Enter book title" value="<?php if ($_POST){ echo $title; }; ?>">
+                      <input type="text" class="form-control" name="title"  placeholder="E.g. 'The Wind in the Willows'" value="<?php if ($_POST){ echo $title; }; ?>">
                     </div>
 
                     <div class="form-group author-group">
                       <label for="author">Author</label>
-                      <input type="text" autocomplete="off" class="form-control"  name="author" placeholder="Enter books author" value="<?php if ($_POST){ echo $author; }; ?>">
+                      <input type="text" autocomplete="off" class="form-control"  name="author" placeholder="E.g. 'Kenneth Grahame'" value="<?php if ($_POST){ echo $author; }; ?>">
                     </div>
 
                     <div class="form-group">
                       <label for="year">Year</label>
-                      <input type="number" autocomplete="off" class="form-control"  name="year" placeholder="Enter the year it was released" max="<?php echo date('Y'); ?>" value="<?php if($_POST){ echo $year; }; ?>">
+                      <input type="number" autocomplete="off" class="form-control"  name="year" placeholder="E.g. '1902'" max="<?php echo date('Y'); ?>" value="<?php if($_POST){ echo $year; }; ?>">
                     </div>
 
                     <div class="form-group">
                       <label for="description">Book Description</label>
-                      <textarea class="form-control" name="description" rows="8" cols="80" placeholder="Description about the book"><?php if ($_POST){ echo $description; }; ?></textarea>
+                      <textarea class="form-control" name="description" rows="8" cols="80" placeholder="E.g. 'With the arrival of spring and fine weather outside, the good-natured Mole loses patience with spring cleaning ...'"><?php if ($_POST){ echo $description; }; ?></textarea>
                     </div>
 
                     <div class="form-group">
