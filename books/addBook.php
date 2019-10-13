@@ -76,28 +76,30 @@
                 $safeYear = mysqli_real_escape_string($dbc, $year);
                 $safeDescription = mysqli_real_escape_string($dbc, $description);
 
-                // $sql = "INSERT INTO `Authors`(`name`) VALUES ('$safeAuthor')";
-                // // double-quotes here, because we're going to be pasting a string in (from when we were testing the query in phpMyAdmin's SQL env)
-                // $result = mysqli_query($dbc, $sql);    // mysqli_query needs two values - a database connection, and a query string
-                //
-                // if($result && mysqli_affected_rows($dbc) > 0){
-                //     // if there's a result AND it's effected a row - think of this as shorthand for success() in AJAX
-                //     // var_dump('Added an author.')
-                //     $authorID = $dbc->insert_id;    // this gets us the ID attached to the most recent DB connection
-                //                                     // which we need for our Books table, so we have an $authorID
-                //
-                // } else {
-                //     die('Something went wrong adding the author.');
-                // }
+                $sql = "INSERT INTO `Authors`(`name`) VALUES ('$safeAuthor')";
+                // double-quotes here, because we're going to be pasting a string in (from when we were testing the query in phpMyAdmin's SQL env)
+                $result = mysqli_query($dbc, $sql);    // mysqli_query needs two values - a database connection, and a query string
 
-                $authorID = 1;       // here's a (valid, as in already in the DB) value for $authorID
+                if($result && mysqli_affected_rows($dbc) > 0){
+                    // if there's a result AND it's effected a row - think of this as shorthand for success() in AJAX
+                    // var_dump('Added an author.')
+                    $authorID = $dbc->insert_id;    // this gets us the ID attached to the most recent DB connection (ie. the most recent query)
+                                                    // which we need for our Books table, so we have an $authorID
+
+                } else {
+                    die('Something went wrong adding the author.');
+                }
+
                 $bookSql = "INSERT INTO `Books`(`title`, `year`, `description`, `author_id`) VALUES ('$safeTitle',$safeYear,'$safeDescription','$authorID')";
                 // die($bookSql);
                 $booksResult = mysqli_query($dbc, $bookSql);
                 if($booksResult && mysqli_affected_rows($dbc) > 0){
                     var_dump('successfully added the book');
-                    // redirect to a page
-                    header('Location:singleBook.php');  // doesn't use the base (is that a scope thing?)
+                    // redirect to a page - if that page is just /singleBook.php, we'll get an error - there's no GET request because we're not sending any information in an endpoint. We haven't included the ID of the book we've just added.
+                    $bookID = $dbc->insert_id;
+                    // just like we didn't have an author ID earlier and had to retrieve one, this time we don't have a book ID
+                    header('Location:singleBook.php?id=' . $bookID);  // doesn't use the base (is that a scope thing?)
+
                 } else {
                     die('something went wrong adding the book');
                 }
