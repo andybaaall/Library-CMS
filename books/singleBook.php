@@ -73,7 +73,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger">Confirm Delete</button>
+                    <!-- <button type="button" class="btn btn-danger">Confirm Delete</button> -->
+                    <a href="/books/delete.php" class="btn btn-danger text-light">Confirm Delete</a>
+                            <!--  don't forget yr links go BASE/dir/file.php -->
                 </div>
             </div>
         </div>
