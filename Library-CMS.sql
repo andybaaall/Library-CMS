@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 10, 2019 at 10:33 PM
+-- Generation Time: Oct 13, 2019 at 10:25 PM
 -- Server version: 5.7.27-0ubuntu0.16.04.1
 -- PHP Version: 7.0.33-8+ubuntu16.04.1+deb.sury.org+1
 
@@ -37,9 +37,10 @@ CREATE TABLE `Authors` (
 
 INSERT INTO `Authors` (`_id`, `name`) VALUES
 (1, 'test author'),
-(2, 'Tenessee Williams'),
-(16, 'vincent adultman'),
-(17, 'vincent adultman');
+(21, 'new author'),
+(22, 'Tennessee Williams'),
+(23, 'Margaret Atwood'),
+(24, 'Aeschylus');
 
 -- --------------------------------------------------------
 
@@ -62,7 +63,11 @@ CREATE TABLE `Books` (
 INSERT INTO `Books` (`_id`, `title`, `year`, `description`, `author_id`) VALUES
 (5, 'test title', 1999, 'test description for a test book', 1),
 (6, 'The Wind in the Willows', 1902, 'With the arrival of spring yadda yadda, they go on a picnic.', 1),
-(7, 'The Castle', 1930, '1930something, I guess. There\'s no castle. ', 1);
+(7, 'The Castle', 1930, '1930something, I guess. There\'s no castle. ', 1),
+(11, 'Thomas the Tank Engine', 1920, 'This is a hilarious idea, maybe', 22),
+(12, 'Wind in the Willows', 1999, 'This is a serious exploration of gender, oppression and woodland picnics.', 23),
+(13, 'Blood Meridian', 1930, 'A heartbreaking musical about, uh, cowboys and the evening redness in the West.', 22),
+(14, ' Ἀγαμέμνων', 2010, 'Very sad book about the alpha couple.', 24);
 
 --
 -- Indexes for dumped tables
@@ -90,12 +95,12 @@ ALTER TABLE `Books`
 -- AUTO_INCREMENT for table `Authors`
 --
 ALTER TABLE `Authors`
-  MODIFY `_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `Books`
 --
 ALTER TABLE `Books`
-  MODIFY `_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- Constraints for dumped tables
 --
