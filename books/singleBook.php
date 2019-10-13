@@ -5,7 +5,10 @@
 
     // var_dump($_GET);    // getting the id from the last request (ie. the request that got us to this page)
     $bookID = $_GET['id']; // square brackets were breaking the string below
-    $sql = "SELECT * FROM `Books` WHERE _id = $bookID";
+
+    // $sql = "SELECT * FROM `Books` WHERE _id = $bookID";
+    $sql = "SELECT Books.`_id` as bookID, `title`, `year`, `description`, Authors.name as author_name FROM `Books` INNER JOIN Authors ON Books.author_id = Authors._id WHERE Books._id = '$bookID'";
+
     $result = mysqli_query($dbc, $sql);
 
     // now we need to check a) whether the query ran or not and b) whether there's a row or not
@@ -47,7 +50,7 @@
             </div>
             <div class="col-12 col-sm-8 align-self-center">
                 <h3><?php echo $singleBook['title']; ?></h3>
-                <h4><?php echo 'author ID: ' . $singleBook['author_id']; ?></h4>
+                <h4><?php echo 'author ID: ' . $singleBook['author_name']; ?></h4>
             </div>
         </div>
 

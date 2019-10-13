@@ -76,18 +76,38 @@
                 $safeYear = mysqli_real_escape_string($dbc, $year);
                 $safeDescription = mysqli_real_escape_string($dbc, $description);
 
-                $sql = "INSERT INTO `Authors`(`name`) VALUES ('$safeAuthor')";
-                // double-quotes here, because we're going to be pasting a string in (from when we were testing the query in phpMyAdmin's SQL env)
-                $result = mysqli_query($dbc, $sql);    // mysqli_query needs two values - a database connection, and a query string
 
-                if($result && mysqli_affected_rows($dbc) > 0){
-                    // if there's a result AND it's effected a row - think of this as shorthand for success() in AJAX
-                    // var_dump('Added an author.')
-                    $authorID = $dbc->insert_id;    // this gets us the ID attached to the most recent DB connection (ie. the most recent query)
-                                                    // which we need for our Books table, so we have an $authorID
+                $findSql = "SELECT * FROM `Authors` WHERE name = '$safeAuthor'";
+                $findResult = mysqli_query($dbc, $findSql);
 
-                } else {
-                    die('Something went wrong adding the author.');
+                if($findResult && mysqli_affected_rows($dbc) > 0){
+                    // author already exists
+                    $foundAuthor = mysqli_fetch_array($findResult, MYSQLI_ASSOC);   // turn $findResult into a readable array
+                    $authorID = $foundAuthor['_id'];
+
+                    // we're going to write a JOIN query, to get results from books and authors in the same query (for efficiency!)
+                    // we want to get one associative array which contains the information in Authors as well as the information in Books.
+
+                    
+
+
+                } else if ($findResult && mysqli_affected_rows($dbc) === 0){
+                    // author does not already exist, so we need to add one.
+                    $sql = "INSERT INTO `Authors`(`name`) VALUES ('$safeAuthor')";
+                    // double-quotes here, because we're going to be pasting a string in (from when we were testing the query in phpMyAdmin's SQL env)
+                    $result = mysqli_query($dbc, $sql);    // mysqli_query needs two values - a database connection, and a query string
+
+                    if($result && mysqli_affected_rows($dbc) > 0){
+                        // if there's a result AND it's effected a row - think of this as shorthand for success() in AJAX
+                        // var_dump('Added an author.')
+                        $authorID = $dbc->insert_id;    // this gets us the ID attached to the most recent DB connection (ie. the most recent query)
+                                                        // which we need for our Books table, so we have an $authorID
+
+                    } else {
+                        die('Something went wrong adding the author.');
+                    }
+                }   else {
+                    die('Something went wrong with finding the author.');
                 }
 
                 $bookSql = "INSERT INTO `Books`(`title`, `year`, `description`, `author_id`) VALUES ('$safeTitle',$safeYear,'$safeDescription','$authorID')";
