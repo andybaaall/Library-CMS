@@ -76,6 +76,7 @@
                     <!-- <button type="button" class="btn btn-danger">Confirm Delete</button> -->
                     <a href="/books/delete.php" class="btn btn-danger text-light">Confirm Delete</a>
                             <!--  don't forget yr links go BASE/dir/file.php -->
+                            <!-- though this one doesn't seem to? -->
                 </div>
             </div>
         </div>

@@ -4,7 +4,39 @@
 
     <div class="container">
         <?php require('../templates/navbar.php');
+        // are we editing or adding a book?
+        if (isset($_GET['id'])) {
+            // var_dump('we\'re editing a book - there was a GET req for a given ID');
 
+
+            // (we requested url/addBook.php?id=$bookID. The endpoint is $bookID. the request object contains the parameter 'id' (and, right now, no other parameters. Think back to when we were filtering data using endpoints in Mockaroo))
+
+            $bookID = $_GET['id'];
+
+            $pageTitle = 'Edit Book';
+
+            $sql = "SELECT Books.`_id` as bookID, `title`, `year`, `description`, Authors.name as author FROM `Books` INNER JOIN Authors ON Books.author_id = Authors._id WHERE Books._id = '$bookID'";
+
+            $result = mysqli_query($dbc, $sql);
+
+            if ($result && mysqli_affected_rows($dbc) > 0) {
+                // die('got a result');
+                $singleBook = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+                extract($singleBook);
+
+            } else if ($result && mysqli_affected_rows($dbc) === 0){
+                // die('404');
+                header('Location: ../errors/404.php');
+            } else {
+                die('something went really wrong!');
+            }
+
+
+        } else {
+            // var_dump('we\'re editing a book - there was a not a get req');
+            $pageTitle = 'Add a Book';
+        }
         // these templates really need to be refactored!
 
         // var_dump($_POST);
@@ -88,7 +120,7 @@
                     // we're going to write a JOIN query, to get results from books and authors in the same query (for efficiency!)
                     // we want to get one associative array which contains the information in Authors as well as the information in Books.
 
-                    
+
 
 
                 } else if ($findResult && mysqli_affected_rows($dbc) === 0){
@@ -110,13 +142,18 @@
                     die('Something went wrong with finding the author.');
                 }
 
-                $bookSql = "INSERT INTO `Books`(`title`, `year`, `description`, `author_id`) VALUES ('$safeTitle',$safeYear,'$safeDescription','$authorID')";
+                if (isset($_GET['id'])) {
+                    $bookSql = "UPDATE `Books` SET `title`='$safeTitle',`year`='$safeYear',`description`='$safeDescription',`author_id`='$authorID' WHERE _id = '$bookID'";
+                } else {
+                    $bookSql = "INSERT INTO `Books`(`title`, `year`, `description`, `author_id`) VALUES ('$safeTitle',$safeYear,'$safeDescription','$authorID')";
+                }
+
                 // die($bookSql);
                 $booksResult = mysqli_query($dbc, $bookSql);
                 if($booksResult && mysqli_affected_rows($dbc) > 0){
                     var_dump('successfully added the book');
                     // redirect to a page - if that page is just /singleBook.php, we'll get an error - there's no GET request because we're not sending any information in an endpoint. We haven't included the ID of the book we've just added.
-                    $bookID = $dbc->insert_id;
+                    $bookID = $_GET['id'];
                     // just like we didn't have an author ID earlier and had to retrieve one, this time we don't have a book ID
                     header('Location:singleBook.php?id=' . $bookID);  // doesn't use the base (is that a scope thing?)
 
@@ -124,16 +161,16 @@
                     die('something went wrong adding the book');
                 }
 
-            }   // if($_POST)
+            }
+        }// if($_POST)
 
 
-        }
 ?>
 
 
         <div class="row mb-2">
             <div class="col">
-                <h1>Add New Book</h1>
+                <h1><?php echo $pageTitle ?></h1>
             </div>
         </div>
 
@@ -155,25 +192,25 @@
 
         <div class="row mb-2">
             <div class="col">
-                <form action="./books/addBook.php" method="post" enctype="multipart/form-data" autocomplete="off">
+                <form action="./books/addBook.php<?php if(isset($_GET['id'])){ echo'?id=' . $_GET['id'];};  ?>" method="post" enctype="multipart/form-data" autocomplete="off">
                     <div class="form-group">
                       <label for="title">Book Title</label>
-                      <input type="text" class="form-control" name="title"  placeholder="E.g. 'The Wind in the Willows'" value="<?php if ($_POST){ echo $title; }; ?>">
+                      <input type="text" class="form-control" name="title"  placeholder="E.g. 'The Wind in the Willows'" value="<?php if (isset($title)){ echo $title;} ?>">    <!-- $title is defined in both if(post) and if(get); both assoc arrays have the same keys. If it's not defined, then we'll error out - that's why we're using isset() -->
                     </div>
 
                     <div class="form-group author-group">
                       <label for="author">Author</label>
-                      <input type="text" autocomplete="off" class="form-control"  name="author" placeholder="E.g. 'Kenneth Grahame'" value="<?php if ($_POST){ echo $author; }; ?>">
+                      <input type="text" autocomplete="off" class="form-control"  name="author" placeholder="E.g. 'Kenneth Grahame'" value="<?php if (isset($author)){ echo $author;} ?>">
                     </div>
 
                     <div class="form-group">
                       <label for="year">Year</label>
-                      <input type="number" autocomplete="off" class="form-control"  name="year" placeholder="E.g. '1902'" max="<?php echo date('Y'); ?>" value="<?php if($_POST){ echo $year; }; ?>">
+                      <input type="number" autocomplete="off" class="form-control"  name="year" placeholder="E.g. '1902'" value="<?php if (isset($year)){ echo $year;} ?>">
                     </div>
 
                     <div class="form-group">
                       <label for="description">Book Description</label>
-                      <textarea class="form-control" name="description" rows="8" cols="80" placeholder="E.g. 'With the arrival of spring and fine weather outside, the good-natured Mole loses patience with spring cleaning ...'"><?php if ($_POST){ echo $description; }; ?></textarea>
+                      <textarea class="form-control" name="description" rows="8" cols="80" placeholder="E.g. 'With the arrival of spring and fine weather outside, the good-natured Mole loses patience with spring cleaning ...'"><?php if (isset($description)){ echo $description;} ?></textarea>
                     </div>
 
                     <div class="form-group">
